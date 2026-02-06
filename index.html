@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Brother</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #ffecd2, #fcb69f);
+        font-family: 'Comic Sans MS', cursive;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    h1 {
+        margin-top: 80px;
+        font-size: 50px;
+        color: #ff0066;
+        text-shadow: 2px 2px yellow;
+    }
+
+    p {
+        font-size: 22px;
+        color: #333;
+    }
+
+    .card {
+        background: white;
+        width: 60%;
+        margin: auto;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .emoji {
+        font-size: 40px;
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+    <h1>🎉 Happy Birthday Bro! 🎂</h1>
+    <p>
+        Congrats on leveling up! 🎮<br><br>
+        You are now officially older… but still not wiser 😜<br><br>
+        Thanks for being my brother, my bodyguard,  
+        and my personal comedy show 🤣<br><br>
+        May your cake be sweet 🍰  
+        and your gifts be expensive 💸<br><br>
+        Stay cool, stay crazy, and never stop being YOU 😎
+    </p>
+    <p class="emoji">🎁🎈🥳</p>
+</div>
+
+<script>
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+for (let i = 0; i < 300; i++) {
+    confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 10,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)",
+        tilt: Math.random() * 10
+    });
+}
+
+function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach((c, i) => {
+        ctx.beginPath();
+        ctx.fillStyle = c.color;
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    updateConfetti();
+}
+
+function updateConfetti() {
+    confetti.forEach((c, i) => {
+        c.y += Math.cos(c.d) + 1;
+        c.x += Math.sin(c.d);
+
+        if (c.y > canvas.height) {
+            confetti[i] = {
+                x: Math.random() * canvas.width,
+                y: 0,
+                r: c.r,
+                d: c.d,
+                color: c.color,
+                tilt: c.tilt
+            };
+        }
+    });
+}
+
+setInterval(drawConfetti, 20);
+</script>
+
+</body>
+</html>
